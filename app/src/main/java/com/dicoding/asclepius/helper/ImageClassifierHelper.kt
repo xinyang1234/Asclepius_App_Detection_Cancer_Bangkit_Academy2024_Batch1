@@ -2,15 +2,11 @@ package com.dicoding.asclepius.helper
 
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.Image
 import android.net.Uri
 import android.os.SystemClock
 import android.util.Log
 import com.dicoding.asclepius.R
-import org.tensorflow.lite.DataType
-import org.tensorflow.lite.support.common.ops.CastOp
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp

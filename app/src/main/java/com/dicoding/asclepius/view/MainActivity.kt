@@ -1,21 +1,20 @@
 package com.dicoding.asclepius.view
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.asclepius.R
 import com.dicoding.asclepius.databinding.ActivityMainBinding
 import com.dicoding.asclepius.helper.ImageClassifierHelper
-import org.tensorflow.lite.task.vision.classifier.Classifications
 import com.yalantis.ucrop.UCrop
+import org.tensorflow.lite.task.vision.classifier.Classifications
 import java.io.File
 import java.util.Date
 
@@ -32,11 +31,11 @@ class MainActivity : AppCompatActivity() {
 
         checkInternetConnection()
 
-        binding.galleryButton.setOnClickListener{startGallery()}
+        binding.galleryButton.setOnClickListener { startGallery() }
         binding.analyzeButton.setOnClickListener {
             currentImageUri?.let {
                 analyzeImage(it)
-            } ?: run{
+            } ?: run {
                 showToast(getString(R.string.image_warning))
             }
         }
@@ -58,7 +57,11 @@ class MainActivity : AppCompatActivity() {
             imageClassifierHelper = ImageClassifierHelper(context = this,
                 classifierListener = object : ImageClassifierHelper.ClassifierListener {
                     override fun onError(error: String) {
-                        Toast.makeText(this@MainActivity, "Something went error!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Something went error!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                     override fun onResults(results: List<Classifications>?, inferenceTime: Long) {
@@ -107,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun cropperImage(uri: Uri){
+    private fun cropperImage(uri: Uri) {
         UCrop.of(uri, Uri.fromFile(File(cacheDir, "cropped_image_${Date().time}.jpg")))
             .withAspectRatio(1f, 1f).getIntent(this).apply {
                 imageCropperLauncher.launch(this)
@@ -129,7 +132,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkInternetConnection() {
-        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
 
         if (networkInfo == null || !networkInfo.isConnected) {
